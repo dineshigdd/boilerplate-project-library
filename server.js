@@ -1,14 +1,16 @@
 'use strict';
 
-var express     = require('express');
-var bodyParser  = require('body-parser');
-var cors        = require('cors');
+const express     = require('express');
+const bodyParser  = require('body-parser');
+const cors        = require('cors');
 
-var apiRoutes         = require('./routes/api.js');
-var fccTestingRoutes  = require('./routes/fcctesting.js');
-var runner            = require('./test-runner');
+const apiRoutes         = require('./routes/api.js');
+const fccTestingRoutes  = require('./routes/fcctesting.js');
+const runner            = require('./test-runner');
+require('dotenv').config();
 
-var app = express();
+
+const app = express();
 
 app.use('/public', express.static(process.cwd() + '/public'));
 
@@ -16,6 +18,8 @@ app.use(cors({origin: '*'})); //USED FOR FCC TESTING PURPOSES ONLY!
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
 
 //Index page (static HTML)
 app.route('/')

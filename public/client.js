@@ -1,9 +1,9 @@
 $( document ).ready(function() {
   var items = [];
   var itemsRaw = [];
-  
+ 
   $.getJSON('/api/books', function(data) {
-    //var items = [];
+    //var items = [];    
     itemsRaw = data;
     $.each(data, function(i, val) {
       items.push('<li class="bookItem" id="' + i + '">' + val.title + ' - ' + val.commentcount + ' comments</li>');
@@ -34,7 +34,8 @@ $( document ).ready(function() {
   });
   
   $('#bookDetail').on('click','button.deleteBook',function() {
-    $.ajax({
+    console.log( this.id);
+    $.ajax({      
       url: '/api/books/'+this.id,
       type: 'delete',
       success: function(data) {
@@ -58,16 +59,18 @@ $( document ).ready(function() {
     });
   });
   
-  $('#newBook').click(function() {
+  $('#newBook').click(function() {    
     $.ajax({
       url: '/api/books',
       type: 'post',
       dataType: 'json',
       data: $('#newBookForm').serialize(),
       success: function(data) {
-        //update list
+        //update list   
+      
       }
     });
+    
   });
   
   $('#deleteAllBooks').click(function() {
@@ -78,6 +81,12 @@ $( document ).ready(function() {
       data: $('#newBookForm').serialize(),
       success: function(data) {
         //update list
+        if( data.booksDeleted > 0 ){
+          alert("Total of " + ( data.booksDeleted > 1 ? data.booksDeleted + " books are" : data.booksDeleted + " book is" ) + " removed from the Collection")
+          location.reload();
+        }else{
+          alert( "No books to remove")
+        }
       }
     });
   }); 
