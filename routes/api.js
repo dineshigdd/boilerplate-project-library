@@ -17,12 +17,12 @@ const uri = process.env.DB;
 
 
 module.exports = function (app) {	
-	let bookCollection, database;
+	let bookCollection;
   MongoClient.connect( uri,(err ,db)=>{
     try{
-    database = db;
+    
     console.log( "connect to Mongo DB");
-    bookCollection = database.db("libraryDB").collection("books");
+    bookCollection = db.db("libraryDB").collection("books");
     }catch(err){
       console.log( err );
     }
