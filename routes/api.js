@@ -44,7 +44,7 @@ module.exports = function (app) {
 
            }
         }
-     ] , ( err, result) => res.json(result))
+     ] ).toArray( ( err, result) => res.json(result))
     })
     
     .post(function (req, res){
@@ -70,7 +70,7 @@ module.exports = function (app) {
     
     .delete(function(req, res){
       //if successful response will be 'complete delete successful'
-      bookCollection.remove({}, (err, removedDocs )=>{
+      bookCollection.deleteMany({}, (err, removedDocs )=>{
         if( err ) throw err;       
           res.json( { booksDeleted:removedDocs.result.n })//total number of documents removed
         
@@ -121,7 +121,7 @@ module.exports = function (app) {
     .delete(function(req, res){
       let bookid = req.params.id;     
       //if successful response will be 'delete successful'
-      bookCollection.remove( {_id:ObjectId(bookid) } ,( err )=>{
+      bookCollection.deleteOne( {_id:ObjectId(bookid) } ,( err )=>{
         if( err ) throw err;
         res.send("delete successful");
       })
